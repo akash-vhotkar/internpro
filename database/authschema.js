@@ -19,6 +19,14 @@ const schema = new mongoose.Schema({
     confirm_password: {
         type: String,
         required: true
+    },
+    referalId: {
+        type: String,
+        required: true
+    },
+    referralname: {
+        type: String,
+        required: true
     }
 
 

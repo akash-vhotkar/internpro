@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const database = require('../database/authschema');
 const passport_auth = require('../config/passport');
 
-
+router.get('/login', (req, res) => {
+    res.render('login');
+})
 router.post('/login',
     passport.authenticate('local', { failureRedirect: '/login' }),
     function (req, res) {
