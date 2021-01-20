@@ -14,12 +14,19 @@ const schema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     confirm_password: {
         type: String,
-        required: true
+        required: false
     },
+    referfrom: [{
+        child_node_name: String,
+        Child_node_email: String,
+        Child_node_referalID: String,
+        Child_node_referral_name: String
+    }]
+    ,
     referalId: {
         type: String,
         required: false
@@ -27,7 +34,13 @@ const schema = new mongoose.Schema({
     referralname: {
         type: String,
         required: false
-    }
+    },
+    referlto: [{
+        child_node_name: String,
+        Child_node_email: String,
+        Child_node_referalID: String,
+        Child_node_referral_name: String
+    }]
 
 
 })
