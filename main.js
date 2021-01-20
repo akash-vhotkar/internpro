@@ -5,9 +5,26 @@ const session_secrete = require('./keys').session_secrete;
 const mongoose = require('mongoose');
 const Url = require('./keys').mongoUrl;
 const body_parser = require('body-parser');
+const cookie_session = require('cookie-session');
+const cookie_session_secreate = require('./keys').cookie_secrete;
+const cookie_parser = require('cookie-parser');
 const app = express();
 app.set("view engine", 'ejs');
+app.use(body_parser.urlencoded({ extended: true }))
 
+
+app.use(cookie_parser());
+app.use(cookie_session({
+    maxAge: 120 * 60000,
+    keys: [cookie_session_secreate]
+}));
+
+
+mongoose.connect(Url, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+    console.log("the database is connected successfully...");
+}).catch(err => {
+    console.log(err);
+})
 app.use(express_session({
     secret: session_secrete,
     resave: true,
@@ -18,13 +35,6 @@ app.use(express_session({
     }
 }))
 
-
-mongoose.connect(Url, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-    console.log("the database is connected successfully...");
-}).catch(err => {
-    console.log(err);
-})
-app.use(body_parser.urlencoded({ extended: true }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/home/auth', require('./routes/authenticateuser'));

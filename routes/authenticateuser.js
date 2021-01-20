@@ -6,6 +6,22 @@ const mongoose = require('mongoose');
 const database = require('../database/authschema');
 const passport_auth = require('../config/passport');
 const express_session = require('express-session');
+const pass_auth = require('../config/passport')
+
+
+
+
+
+router.get("/googleredirect", passport.authenticate("google"), (req, res) => {
+    res.render('home');
+});
+
+router.get("/googlelogin", passport.authenticate("google", {
+    scope: ["profile"]
+}));
+
+
+
 
 router.get('/login', (req, res) => {
     res.render('login');
