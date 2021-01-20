@@ -5,19 +5,19 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const database = require('../database/authschema');
 const passport_auth = require('../config/passport');
-const express_session = require('express-session');
-const pass_auth = require('../config/passport')
 
 
 
 
-
-router.get("/googleredirect", passport.authenticate("google"), (req, res) => {
-    res.render('home');
+router.get('registerfail', (req, res) => {
+    res.send("regsiter fail");
+})
+router.get("/googleredirect", passport.authenticate("google", { failureRedirect: '/home/auth/registerfail' }), (req, res) => {
+    res.redirect('/home/')
 });
 
-router.get("/googlelogin", passport.authenticate("google", {
-    scope: ["profile"]
+router.get("/googleregister", passport.authenticate("google", {
+    scope: ["profile", 'email']
 }));
 
 
@@ -25,11 +25,6 @@ router.get("/googlelogin", passport.authenticate("google", {
 
 router.get('/login', (req, res) => {
     res.render('login');
-})
-router.get('/loginfail', (req, res) => {
-    let login_err = [];
-    login_err.push({ err_msg: "use" });
-    res.render('login', { login_err });
 })
 router.get('/register', (req, res) => {
     res.render('register')

@@ -18,6 +18,8 @@ app.use(cookie_session({
     maxAge: 120 * 60000,
     keys: [cookie_session_secreate]
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 mongoose.connect(Url, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
@@ -35,8 +37,6 @@ app.use(express_session({
     }
 }))
 
-app.use(passport.initialize());
-app.use(passport.session());
 app.use('/home/auth', require('./routes/authenticateuser'));
 app.use('/home', require('./routes/landingpage'))
 
